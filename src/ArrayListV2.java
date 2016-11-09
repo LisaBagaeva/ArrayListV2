@@ -1,10 +1,4 @@
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.logging.Logger;
-
-import javax.lang.model.element.Element;
-
-public class ArrayListV2 implements Collection<Object> {
+public class ArrayListV2<T> {
 
 	private int size;
 	private int capacity;
@@ -15,9 +9,8 @@ public class ArrayListV2 implements Collection<Object> {
 	 *
 	 */
 	public ArrayListV2(int capacity) {
-		if (capacity < 0) {
+		if (capacity < 0)
 			throw new IllegalArgumentException("Illegal capacity: " + capacity);
-		}
 		this.size = 0;
 		this.capacity = capacity;
 		this.elementData = new Object[capacity];
@@ -35,13 +28,12 @@ public class ArrayListV2 implements Collection<Object> {
 	/*
 	 * Appends the specified element to the end of this list
 	 */
-	@Override
-	public boolean add(Object element) {
-		if (size >= capacity){
-		Object[] elementDataCopy = new Object[capacity * 2];
-		System.arraycopy(elementData, 0, elementDataCopy, 0, size);
-		elementData = elementDataCopy;
-		capacity *= 2;
+	public boolean add(T element) {
+		if (size >= capacity) {
+			capacity *= 2;
+			Object[] elementDataCopy = new Object[capacity];
+			System.arraycopy(elementData, 0, elementDataCopy, 0, size);
+			elementData = elementDataCopy;
 		}
 		elementData[size++] = element;
 		return true;
@@ -51,8 +43,8 @@ public class ArrayListV2 implements Collection<Object> {
 	 * Inserts the specified element at the specified position in this list
 	 * 
 	 */
-	public void add(Object element, int index) {
-		if (index > size || index < 0)
+	public void add(T element, int index) {
+		if (index >= size || index < 0)
 			throw new IndexOutOfBoundsException("Illegal index:" + index);
 		else {
 			System.arraycopy(elementData, index, elementData, index + 1, size - index);
@@ -66,18 +58,15 @@ public class ArrayListV2 implements Collection<Object> {
 	 * it is present
 	 * 
 	 */
-	public boolean remove(Object element) {
+	public boolean remove(T element) {
 		if (element == null) {
-			for (int index = 0; index < size; index++) {
+			for (int index = 0; index < size; index++)
 				if (elementData[index] == null)
 					return remove(index);
-			}
 		} else {
-			for (int index = 0; index < size; index++) {
-				if (elementData[index] != null)
-					if (elementData[index].equals(element))
-						return remove(index);
-			}
+			for (int index = 0; index < size; index++)
+				if (element.equals(elementData[index]))
+					return remove(index);
 		}
 		return false;
 	}
@@ -86,7 +75,7 @@ public class ArrayListV2 implements Collection<Object> {
 	 * Removes the element at the specified position in this list
 	 */
 	public boolean remove(int index) {
-		if (index >= size|| index < 0)
+		if (index >= size || index < 0)
 			throw new IndexOutOfBoundsException("llegal index:" + index);
 		else
 			System.arraycopy(elementData, index + 1, elementData, index, size - index - 1);
@@ -108,7 +97,7 @@ public class ArrayListV2 implements Collection<Object> {
 	 * Replaces the element at the specified position in this list with the
 	 * specified element
 	 */
-	public void set(Object element, int index) {
+	public void set(T element, int index) {
 		if (index >= size || index < 0)
 			throw new IndexOutOfBoundsException("llegal index:" + index);
 		else
@@ -152,72 +141,4 @@ public class ArrayListV2 implements Collection<Object> {
 			System.out.print("A[" + i + "]=" + this.get(i) + "; ");
 		System.out.println();
 	}
-
-
-	@Override
-	public boolean addAll(Collection arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean contains(Object arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean containsAll(Collection arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean removeAll(Collection arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean retainAll(Collection arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object[] toArray(Object[] arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
